@@ -1658,11 +1658,11 @@ REGISTERS.update(SDONGLE_REGISTERS)
 
 CHARGER_REGISTERS = {
     rn.CHARGER_MODEL: StringRegister(30078, 14, target_device=TargetDevice.EMMA),
-    rn.CHARGER_PHASE_A_VOLTAGE: U32Register("W", 10, 30500),
-    rn.CHARGER_PHASE_B_VOLTAGE: U32Register("W", 10, 30502),
-    rn.CHARGER_PHASE_C_VOLTAGE: U32Register("W", 10, 30504), 
-    rn.CHARGER_TOTAL_ENERGY_CHARGED: U32Register("kWh", 1000, 30506),  
-    rn.CHARGER_TEMPERATURE: I32Register("°C", 1, 30508),
+    rn.CHARGER_PHASE_A_VOLTAGE: U32Register("V", 100, 30500, target_device=TargetDevice.EMMA),
+    rn.CHARGER_PHASE_B_VOLTAGE: U32Register("W", 10, 30502, target_device=TargetDevice.EMMA),
+    rn.CHARGER_PHASE_C_VOLTAGE: U32Register("W", 10, 30504, target_device=TargetDevice.EMMA), 
+    rn.CHARGER_TOTAL_ENERGY_CHARGED: U32Register("kWh", 1000, 30506, target_device=TargetDevice.EMMA),  
+    rn.CHARGER_TEMPERATURE: I32Register("°C", 1, 30508, target_device=TargetDevice.EMMA),
 }
 
 REGISTERS.update(CHARGER_REGISTERS)
