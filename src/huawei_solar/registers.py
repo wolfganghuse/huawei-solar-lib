@@ -1484,6 +1484,13 @@ EMMA_REGISTERS = {
         30550,
         target_device=TargetDevice.EMMA,
     ),
+    rn.EMMA_CHARGER_MODEL: StringRegister(30078, 14, target_device=TargetDevice.EMMA),
+    rn.EMMA_CHARGER_PHASE_A_VOLTAGE: U32Register("V", 100, 30500, target_device=TargetDevice.EMMA),
+    rn.EMMA_CHARGER_PHASE_B_VOLTAGE: U32Register("W", 10, 30502, target_device=TargetDevice.EMMA),
+    rn.EMMA_CHARGER_PHASE_C_VOLTAGE: U32Register("W", 10, 30504, target_device=TargetDevice.EMMA), 
+    rn.EMMA_CHARGER_TOTAL_ENERGY_CHARGED: U32Register("kWh", 1000, 30506, target_device=TargetDevice.EMMA),  
+    rn.EMMA_CHARGER_TEMPERATURE: I32Register("°C", 1, 30508, target_device=TargetDevice.EMMA),
+
     rn.NUMBER_OF_INVERTERS_FOUND: U16Register(None, 1, 30801, target_device=TargetDevice.EMMA),
     rn.NUMBER_OF_CHARGERS_FOUND: U16Register(None, 1, 30804, target_device=TargetDevice.EMMA),
     rn.PHASE_A_VOLTAGE_BUILT_IN_ENERGY_SENSOR: U32Register("V", 100, 31639, target_device=TargetDevice.EMMA),
@@ -1655,14 +1662,3 @@ SDONGLE_REGISTERS = {
 }
 
 REGISTERS.update(SDONGLE_REGISTERS)
-
-CHARGER_REGISTERS = {
-    rn.CHARGER_MODEL: StringRegister(30078, 14, target_device=TargetDevice.EMMA),
-    rn.CHARGER_PHASE_A_VOLTAGE: U32Register("V", 100, 30500, target_device=TargetDevice.EMMA),
-    rn.CHARGER_PHASE_B_VOLTAGE: U32Register("W", 10, 30502, target_device=TargetDevice.EMMA),
-    rn.CHARGER_PHASE_C_VOLTAGE: U32Register("W", 10, 30504, target_device=TargetDevice.EMMA), 
-    rn.CHARGER_TOTAL_ENERGY_CHARGED: U32Register("kWh", 1000, 30506, target_device=TargetDevice.EMMA),  
-    rn.CHARGER_TEMPERATURE: I32Register("°C", 1, 30508, target_device=TargetDevice.EMMA),
-}
-
-REGISTERS.update(CHARGER_REGISTERS)
