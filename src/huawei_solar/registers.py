@@ -35,6 +35,7 @@ class TargetDevice(Flag):
     EMMA = auto()
     SDONGLE = auto()
     SMARTLOGGER = auto()
+    CHARGER = auto()
 
 
 class RegisterDefinition(Generic[T]):
@@ -848,7 +849,7 @@ class PeakSettingPeriodRegisters(RegisterDefinition[list[PeakSettingPeriod]]):
 
 
 REGISTERS: dict[str, RegisterDefinition] = {
-    rn.MODEL_NAME: StringRegister(30000, 15, target_device=TargetDevice.SUN2000 | TargetDevice.EMMA),
+    rn.MODEL_NAME: StringRegister(30000, 15, target_device=TargetDevice.SUN2000 | TargetDevice.EMMA | TargetDevice.CHARGER),
     rn.SERIAL_NUMBER: StringRegister(
         30015,
         10,
