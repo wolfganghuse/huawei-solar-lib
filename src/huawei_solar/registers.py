@@ -35,7 +35,7 @@ class TargetDevice(Flag):
     EMMA = auto()
     SDONGLE = auto()
     SMARTLOGGER = auto()
-    CHARGER = auto()
+    SCharger = auto()
 
 
 class RegisterDefinition(Generic[T]):
@@ -849,15 +849,15 @@ class PeakSettingPeriodRegisters(RegisterDefinition[list[PeakSettingPeriod]]):
 
 
 REGISTERS: dict[str, RegisterDefinition] = {
-    rn.MODEL_NAME: StringRegister(30000, 15, target_device=TargetDevice.SUN2000 | TargetDevice.EMMA | TargetDevice.CHARGER),
+    rn.MODEL_NAME: StringRegister(30000, 15, target_device=TargetDevice.SUN2000 | TargetDevice.EMMA | TargetDevice.SCharger),
     rn.SERIAL_NUMBER: StringRegister(
         30015,
         10,
-        target_device=TargetDevice.SUN2000 | TargetDevice.EMMA | TargetDevice.SDONGLE | TargetDevice.CHARGER,
+        target_device=TargetDevice.SUN2000 | TargetDevice.EMMA | TargetDevice.SDONGLE | TargetDevice.SCharger,
     ),
-    rn.PN: StringRegister(30025, 10, target_device=TargetDevice.SUN2000 | TargetDevice.CHARGER),
-    rn.FIRMWARE_VERSION: StringRegister(30035, 15, target_device=TargetDevice.SUN2000 | TargetDevice.CHARGER),
-    rn.SOFTWARE_VERSION: StringRegister(30050, 15, target_device=TargetDevice.SUN2000 | TargetDevice.SDONGLE | TargetDevice.CHARGER),
+    rn.PN: StringRegister(30025, 10, target_device=TargetDevice.SUN2000 | TargetDevice.SCharger),
+    rn.FIRMWARE_VERSION: StringRegister(30035, 15, target_device=TargetDevice.SUN2000 | TargetDevice.SCharger),
+    rn.SOFTWARE_VERSION: StringRegister(30050, 15, target_device=TargetDevice.SUN2000 | TargetDevice.SDONGLE | TargetDevice.SCharger),
     rn.PROTOCOL_VERSION_MODBUS: U32Register(None, 1, 30068),
     rn.MODEL_ID: U16Register(None, 1, 30070),
     rn.NB_PV_STRINGS: U16Register(None, 1, 30071),
@@ -1485,12 +1485,12 @@ EMMA_REGISTERS = {
         30550,
         target_device=TargetDevice.EMMA,
     ),
-    rn.EMMA_CHARGER_MODEL: StringRegister(30078, 14, target_device=TargetDevice.CHARGER),
-    rn.EMMA_CHARGER_PHASE_A_VOLTAGE: U32Register("V", 100, 30500, target_device=TargetDevice.CHARGER),
-    rn.EMMA_CHARGER_PHASE_B_VOLTAGE: U32Register("W", 10, 30502, target_device=TargetDevice.CHARGER),
-    rn.EMMA_CHARGER_PHASE_C_VOLTAGE: U32Register("W", 10, 30504, target_device=TargetDevice.CHARGER), 
-    rn.EMMA_CHARGER_TOTAL_ENERGY_CHARGED: U32Register("kWh", 1000, 30506, target_device=TargetDevice.CHARGER),  
-    rn.EMMA_CHARGER_TEMPERATURE: I32Register("°C", 1, 30508, target_device=TargetDevice.CHARGER),
+    rn.EMMA_CHARGER_MODEL: StringRegister(30078, 14, target_device=TargetDevice.SCharger),
+    rn.EMMA_CHARGER_PHASE_A_VOLTAGE: U32Register("V", 100, 30500, target_device=TargetDevice.SCharger),
+    rn.EMMA_CHARGER_PHASE_B_VOLTAGE: U32Register("W", 10, 30502, target_device=TargetDevice.SCharger),
+    rn.EMMA_CHARGER_PHASE_C_VOLTAGE: U32Register("W", 10, 30504, target_device=TargetDevice.SCharger), 
+    rn.EMMA_CHARGER_TOTAL_ENERGY_CHARGED: U32Register("kWh", 1000, 30506, target_device=TargetDevice.SCharger),  
+    rn.EMMA_CHARGER_TEMPERATURE: I32Register("°C", 1, 30508, target_device=TargetDevice.SCharger),
 
     rn.NUMBER_OF_INVERTERS_FOUND: U16Register(None, 1, 30801, target_device=TargetDevice.EMMA),
     rn.NUMBER_OF_CHARGERS_FOUND: U16Register(None, 1, 30804, target_device=TargetDevice.EMMA),
