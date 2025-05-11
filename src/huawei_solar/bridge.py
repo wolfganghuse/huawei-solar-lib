@@ -56,32 +56,32 @@ class HuaweiSolarProductInfo:
     software_version: str
 
     @classmethod
-    async def retrieve_from_device(cls, client: AsyncHuaweiSolar, slave_id: int):
-        """Retrieve product info from device."""
-        (
-            model_name_result,
-            serial_number_result,
-            pn_result,
-            firmware_version_result,
-            software_version_result,
-        ) = await client.get_multiple(
-            [
-                rn.MODEL_NAME,
-                rn.SERIAL_NUMBER,
-                rn.PN,
-                rn.FIRMWARE_VERSION,
-                rn.SOFTWARE_VERSION,
-            ],
-            slave_id,
+    async def retrieve_from_device(cls,
+                                   client: AsyncHuaweiSolar,
+                                   slave_id: int):
+        """Retrieve product info via Modbus-0x2B Read Device Identification."""
+        # 1) Lese Basic + Regular Device Identifiers (read_code=2)
+        resp = await client._read_device_information(
+            read_code=2,      # 1=Basic, 2=Regular, 3=Extended
+            object_id=0x00,   # Start bei 0x00
+            slave=slave_id
+        )
+        info = resp.information  # Dict[int, bytes]
+
+        # Hilfsfunktion zum Dekodieren
+        def _dec(oid: int) -> str:
+            raw = info.get(oid, b"")
+            return raw.decode("ascii", errors="ignore").rstrip("\x00")
+
+        # Map der Objekt-IDs zu Feldnamen
+        return cls(
+            model_name        = _dec(0x00),   # Vendor name
+            product_number    = _dec(0x01),   # Product code
+            firmware_version  = _dec(0x02),   # Main revision
+            serial_number     = _dec(0x10),   # ObjID 0x10 = ESN (Regular)
+            software_version  = _dec(0x18),   # ObjID 0x18 = Software version (Regular)
         )
 
-        return cls(
-            model_name=model_name_result.value,
-            serial_number=serial_number_result.value,
-            product_number=pn_result.value,
-            firmware_version=firmware_version_result.value,
-            software_version=software_version_result.value,
-        )
 
 
 class HuaweiSolarBridge(ABC):
